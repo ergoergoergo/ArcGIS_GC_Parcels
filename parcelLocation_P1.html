@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>GIS Labs - GC Locator</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/Track",
+      "esri/WebMap",
+      //"esri/BasemapLayer",
+      "esri/Basemap",
+      "esri/portal/PortalItem",      
+      "esri/layers/GroupLayer",
+      "esri/layers/MapImageLayer",
+      "esri/widgets/LayerList",
+      "esri/layers/support/Sublayer",
+      "esri/widgets/Legend",
+      "esri/PopupTemplate",
+      "esri/geometry/Extent",
+      "esri/tasks/QueryTask",
+      "esri/tasks/support/Query",
+      "esri/widgets/ScaleBar",
+      "esri/widgets/Home",
+      "esri/widgets/Print",
+      "esri/widgets/Print/TemplateOptions",
+      "esri/widgets/Expand",
+      "esri/Viewpoint",
+      "dojo/on",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView, Track, WebMap, Basemap, PortalItem, GroupLayer, MapImageLayer, LayerList, Sublayer, Legend, PopupTemplate, Extent, QueryTask, Query, ScaleBar, Home, Print, TemplateOptions, Expand, Viewpoint, on
+    ) {
+
+      var webmap = new WebMap({
+
+        portalItem: { // autocasts as new PortalItem()
+
+          id: "f23f7635acf8479a8c77e584d77c0477"
+
+        }
+
+      }); 
+  
+      // Add the map to a MapView
+      var view = new MapView({
+        map: webmap,
+        container: "viewDiv"
+      });
+
+      var track = new Track({
+
+        view: view
+
+      });
+
+      view.ui.add(track, "top-left");
+
+
+      
+      // The sample will start tracking your location
+
+      // once the view becomes ready
+
+      view.when(function() {
+        view.goTo(vp);
+        track.start();
+
+      });
+     
+
+      // Add widget to the top right corner of the view
+      var layerList = new LayerList({
+        view: view,
+        
+      });
+      view.ui.add(layerList, "top-right");
+
+      var homeWidget = new Home({
+        view: view,
+        viewpoint: vp
+      });
+
+      // adds the home widget to the top left corner of the MapView
+      view.ui.add(homeWidget, "top-left");    
+    
+      var scaleBar = new ScaleBar({
+        view: view
+      });
+      // Add widget to the bottom left corner of the view
+      view.ui.add(scaleBar, {
+        position: "bottom-left"
+      }); 
+
+    });
+   
+  </script>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 98%;
+      width: 100%;
+      overflow: hidden;
+    }
+       
+  </style>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>
